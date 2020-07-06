@@ -1,0 +1,4 @@
+[submodule "ansible-role-virt-infra"]
+	path = roles/ansible-role-virt-infra
+	url = git@github.com:drchristensen/ansible-role-virt-infra.git
+	branch = powervm-dpdk-perf
