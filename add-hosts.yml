@@ -1,0 +1,11 @@
+- hosts: all,!kvmhost
+  tasks:
+    - name: Copy /etc/hosts to VM guests
+      copy:
+        src: /etc/hosts
+        dest: /etc/hosts
+        owner: root
+        group: root
+        mode: 0644
+      become: true
+

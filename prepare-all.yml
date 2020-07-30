@@ -1,0 +1,54 @@
+- hosts: all,!kvmhost
+  tasks:
+    - name: Setup /etc/hosts to VM guests
+      copy:
+        src: /etc/hosts
+        dest: /etc/hosts
+        owner: root
+        group: root
+        mode: 0644
+      become: true
+
+    - name: Upgrade all packages
+      package:
+        name: '*'
+        state: latest
+      become: true
+      register: result_package_update
+      retries: 30
+      delay: 10
+      until: result_package_update is succeeded
+
+    - name: Install packages
+      package:
+        name:
+          - git
+          - vim
+          - qperf
+          - iperf3
+          - podman
+          - nfs-utils
+          - nfs4-acl-tools
+        state: present
+      become: true
+      register: result_package_install
+      retries: 30
+      delay: 10
+      until: result_package_install is succeeded
+
+    - name: Mount NFS share from host
+      mount:
+        fstype: nfs
+        opts: "rsize=8192,wsize=8192,intr,retry=2"
+        dump: "0"
+        passno: "0"
+        state: mounted
+        src: "{{ item.src }}"
+        path: "{{ item.path }}"
+      become: true
+      with_items:
+         - { src: "192.168.122.1:/mnt/nfs_shares/logs", path: "/mnt/logs" }
+
+    - name: Reboot nodes after updates
+      reboot:
+      become: true

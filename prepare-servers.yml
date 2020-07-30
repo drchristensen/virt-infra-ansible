@@ -1,0 +1,28 @@
+- hosts: dpdkserver,!dpdkclient,!kvmhost
+  tasks:
+    - name: Install server data files
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: 0600
+      loop:
+        - { src: 'server/Dockerfile', dest: '/root/Dockerfile' }
+      become: true
+
+    - name: Install server scripts
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: 0700
+      loop:
+        - { src: 'server/create-pods.sh', dest: '/root/create-pods.sh' }
+        - { src: 'server/entry.sh', dest: '/root/entry.sh' }
+      become: true
+
+    - name: Create containers on the VM host
+      become: true
+      command: sh /root/create-pods.sh
