@@ -23,7 +23,7 @@ do
     CONTAINER_NAME="cont-$COUNT"
     CONTAINER_SERVICE="container-$CONTAINER_NAME.service"
     # Note that the timezone mount may not work with all distros
-    podman create -d --name $CONTAINER_NAME --hostname $CONTAINER_NAME -e QPERF_PORT=$QPERF_PORT -e VM_HOSTNAME=$VM_HOSTNAME -v /etc/localtime:/etc/localtime:ro -v /mnt/logs:/mnt/logs --network host $CONTAINER_IMAGE
+    podman create -d --name $CONTAINER_NAME --hostname $CONTAINER_NAME -e QPERF_PORT=$QPERF_PORT -e VM_HOSTNAME=$VM_HOSTNAME -v /etc/localtime:/etc/localtime:ro -v /mnt/logs:/mnt/logs:z --network host $CONTAINER_IMAGE
     podman generate systemd --name $CONTAINER_NAME > /etc/systemd/system/$CONTAINER_SERVICE
     systemctl enable $CONTAINER_SERVICE
     systemctl start $CONTAINER_SERVICE
