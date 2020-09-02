@@ -20,6 +20,8 @@
         mode: 0700
       loop:
         - { src: 'server/create-pods.sh', dest: '/root/create-pods.sh' }
+        - { src: 'server/start-pods.sh', dest: '/root/start-pods.sh' }
+        - { src: 'server/stop-pods.sh', dest: '/root/stop-pods.sh' }
         - { src: 'server/entry.sh', dest: '/root/entry.sh' }
       become: true
 

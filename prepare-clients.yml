@@ -22,6 +22,8 @@
       loop:
         - { src: 'client/qperf-test.sh', dest: '/root/qperf-test.sh' }
         - { src: 'client/create-pods.sh', dest: '/root/create-pods.sh' }
+        - { src: 'client/start-pods.sh', dest: '/root/start-pods.sh' }
+        - { src: 'client/stop-pods.sh', dest: '/root/stop-pods.sh' }
         - { src: 'client/entry.sh', dest: '/root/entry.sh' }
       become: true
 
