@@ -22,6 +22,8 @@
         - { src: 'server/create-pods.sh', dest: '/root/create-pods.sh' }
         - { src: 'server/start-pods.sh', dest: '/root/start-pods.sh' }
         - { src: 'server/stop-pods.sh', dest: '/root/stop-pods.sh' }
+        - { src: 'server/enable-pods.sh', dest: '/root/enable-pods.sh' }
+        - { src: 'server/disable-pods.sh', dest: '/root/disable-pods.sh' }
         - { src: 'server/entry.sh', dest: '/root/entry.sh' }
         - { src: 'server/get-tcp.sh', dest: '/root/get-tcp.sh' }
         - { src: 'server/set-tcp.sh', dest: '/root/set-tcp.sh' }
