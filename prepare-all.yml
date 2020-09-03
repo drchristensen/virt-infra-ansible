@@ -47,7 +47,7 @@
         path: "{{ item.path }}"
       become: true
       with_items:
-         - { src: "192.168.122.1:/mnt/nfs_shares/logs", path: "/mnt/logs" }
+         - { src: "dpdk-host:/mnt/nfs_shares/logs", path: "/mnt/logs" }
 
     - name: Reboot nodes after updates
       reboot:
