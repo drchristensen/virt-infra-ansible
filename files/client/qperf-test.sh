@@ -13,6 +13,36 @@ MIN="$((SEC / 60))"
 
 echo "Running $0 at $TEST_DATE ..."
 
+if (( $MIN % 30 )); then
+	echo "Start time $MIN is not a multiple of 30, quitting ..."
+	exit 0
+fi
+
+# Tests take ~18M to run so we schedule them to run every 30 minutes.
+# Modify the value of TEST_INTERVAL to match the number of tests you
+# want to execute per run.  Refer to the following table:
+#
+# Test # | VM #  | CONT # | # Tests | Interval
+# -------+-------+--------+---------+---------
+#    0   |   0   |   0    |     1   |    30
+#    1   |   0   |  0-1   |     2   |    60
+#    2   |   0   |  0-3   |     4   |    90
+#    3   |   0   |  0-7   |     8   |   120
+#    4   |  0-1  |  0-7   |    16   |   150
+#    5   |  0-3  |  0-7   |    32   |   180
+#    6   |  0-7  |  0-7   |    64   |   210
+#    7   |  0-15 |  0-7   |   128   |   240
+#    8   |  0-31 |  0-7   |   256   |   270
+#    9   |  0-63 |  0-7   |   512   |   300
+#
+TEST_INTERVAL="270"
+
+# Calculate the run number and the test number the script should be
+# executing based on the number of minutes since midnight.
+RUN=$(( MIN / TEST_INTERVAL ))
+TEST=$(( (MIN - RUN * TEST_INTERVAL) / 30 ))
+echo "This is run $RUN and test $TEST ..."
+
 CONT_NAME=`hostname`
 CONT_INSTANCE=`echo $CONT_NAME | sed 's/cont-//'`
 VM_NAME=`echo $VM_HOSTNAME`
@@ -43,63 +73,6 @@ run_test() {
   # Actually run the test
   /usr/bin/qperf -vvc -vvs -vvu  -uu --use_bits_per_sec -t 1m -oo msg_size:64:8M:*2 -H $REM_NAME -lp $QPERF_PORT tcp_bw >> "$LOG_FILE"
 }
-
-#
-# There are 7 tests in a run, 0-6, and the tests take ~18M to run.
-# If we schedule the tests to run every 30 minutes through cron,
-# we can expect 6 complete runs in a day at the following interval
-# (minutes since midnight): [0, 210, 420, 630, 840, 1050]
-#
-# Calculate the run number and the test number the script should be
-# executing based on the number of minutes since midnight.
-
-RUN="0"
-for (( ITEM=0; ITEM < 1440 && ITEM <= MIN; ITEM+=210 ));
-do
-#  echo "ITEM is $ITEM ..."
-  if [[ "$MIN" -ge "$ITEM" && "$MIN" -lt $((ITEM + 210)) ]]; then
-    break
-  fi
-  RUN=$((RUN + 1))
-done
-
-# Make sure we're in range
-if [ "$RUN" -gt 6 ]; then
-  echo "Not a valid time to run the script..."
-  exit 0
-fi
-
-TEST="0"
-for (( ITEM=$((RUN * 210)); ITEM < $((RUN * 210 + 210)); ITEM+=30 ));
-do
-  if [ "$ITEM" == "$MIN" ]; then
-    break
-  fi
-  TEST=$((TEST + 1))
-done
-
-# Make sure we're in range
-if [ "$TEST" -gt 6 ]; then
-  echo "Not a valid time to run the script..."
-  exit 1
-fi
-
-echo "RUN = $RUN, TEST = $TEST ..."
-
-#
-# The following table shows when a test should be run in
-# a container:
-#
-# Test # | VM # | CONT # | # Tests
-# -------+------+--------+--------
-#    0   |   0  |   0    |    1
-#    1   |   0  |  0-1   |    2
-#    2   |   0  |  0-3   |    4
-#    3   |   0  |  0-7   |    8
-#    4   |  0-1 |  0-7   |   16
-#    5   |  0-3 |  0-7   |   32
-#    6   |  0-7 |  0-7   |   64
-#
 
 case $TEST in
   0)
@@ -151,7 +124,31 @@ case $TEST in
     fi
     ;;
   6)
-    echo "Running test 6..."
+    if [ $VM_INSTANCE -le 7 ]; then
+      echo "Running test 6..."
+      run_test
+    else
+      echo "Not running test 6 ..."
+    fi
+    ;;
+  7)
+    if [ $VM_INSTANCE -le 15 ]; then
+      echo "Running test 7..."
+      run_test
+    else
+      echo "Not running test 7 ..."
+    fi
+    ;;
+  8)
+    if [ $VM_INSTANCE -le 31 ]; then
+      echo "Running test 8..."
+      run_test
+    else
+      echo "Not running test 8 ..."
+    fi
+    ;;
+  9)
+    echo "Running test 9..."
     run_test
     ;;
   *)
