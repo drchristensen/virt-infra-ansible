@@ -9,7 +9,13 @@
         mode: 0644
       become: true
 
-    - name: Upgrade all packages
+    - name: Change SELinux mode to permissive
+      become: true
+      selinux:
+        policy: targeted
+        state: permissive
+
+    - name: Upgrade existing packages
       package:
         name: '*'
         state: latest
@@ -19,7 +25,7 @@
       delay: 10
       until: result_package_update is succeeded
 
-    - name: Install packages
+    - name: Install new packages
       package:
         name:
           - git
