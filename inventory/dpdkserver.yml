@@ -9,10 +9,11 @@
 # Note also that CentOS 8 needs the path to system Python
 dpdkserver:
   hosts:
-    dpdk-server-[0:7]:
+    dpdk-server-[0:15]:
       virt_infra_root_password: "password"
-      virt_infra_ram: "4096"
-      virt_infra_cpus: "4"
+      virt_infra_ram: "2048"
+      virt_infra_cpus: "1"
+      virt_infra_numatune: "8,mode=strict"
       virt_infra_state: running
       virt_infra_variant: centos7.0
       virt_infra_distro_image: CentOS-8-GenericCloud-8.2.2004-20200611.2.ppc64le.qcow2
@@ -21,6 +22,38 @@ dpdkserver:
       virt_infra_machine_type: pseries
       virt_infra_graphics: none
       ansible_python_interpreter: /usr/libexec/platform-python
+    dpdk-server-0:
+      virt_infra_cpuset: "96"
+    dpdk-server-1:
+      virt_infra_cpuset: "97"
+    dpdk-server-2:
+      virt_infra_cpuset: "98"
+    dpdk-server-3:
+      virt_infra_cpuset: "99"
+    dpdk-server-4:
+      virt_infra_cpuset: "100"
+    dpdk-server-5:
+      virt_infra_cpuset: "101"
+    dpdk-server-6:
+      virt_infra_cpuset: "102"
+    dpdk-server-7:
+      virt_infra_cpuset: "103"
+    dpdk-server-8:
+      virt_infra_cpuset: "104"
+    dpdk-server-9:
+      virt_infra_cpuset: "105"
+    dpdk-server-10:
+      virt_infra_cpuset: "106"
+    dpdk-server-11:
+      virt_infra_cpuset: "107"
+    dpdk-server-12:
+      virt_infra_cpuset: "108"
+    dpdk-server-13:
+      virt_infra_cpuset: "109"
+    dpdk-server-14:
+      virt_infra_cpuset: "110"
+    dpdk-server-15:
+      virt_infra_cpuset: "111"
   vars:
     ansible_python_interpreter: /usr/bin/python3
     virt_infra_disks:
