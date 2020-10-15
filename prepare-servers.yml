@@ -27,6 +27,8 @@
         - { src: 'server/entry.sh', dest: '/root/entry.sh' }
         - { src: 'server/get-tcp.sh', dest: '/root/get-tcp.sh' }
         - { src: 'server/set-tcp.sh', dest: '/root/set-tcp.sh' }
+        - { src: 'server/temp-tcp.sh', dest: '/root/temp-tcp.sh' }
+        - { src: 'server/vhost.sh', dest: '/root/vhost.sh' }
       become: true
 
     - name: Create containers on the VM host
