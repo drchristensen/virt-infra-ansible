@@ -7,7 +7,7 @@
 # Note that the virt_infra_variant are not set to specific versions,
 # this is to make it work on different hosts
 # Note also that CentOS 8 needs the path to system Python
-dpdk-client:
+dpdkclientsimple:
   hosts:
     dpdk-client-simple-[0:3]:
       virt_infra_root_password: "password"

@@ -7,9 +7,9 @@
 # Note that the virt_infra_variant are not set to specific versions,
 # this is to make it work on different hosts
 # Note also that CentOS 8 needs the path to system Python
-dpdkservertuned:
+dpdkclienttuned:
   hosts:
-    dpdk-server-tuned[0:3]:
+    dpdk-client-tuned-[0:3]:
       virt_infra_root_password: "password"
       virt_infra_ram: "4096"
       virt_infra_cpus: "4"
@@ -38,14 +38,14 @@ dpdkservertuned:
       # virt_infra_graphics: spice
       ###########################################
       ansible_python_interpreter: /usr/libexec/platform-python
-    dpdk-server-tuned-0:
-      virt_infra_cpuset: "72-75"
-    dpdk-server-tuned-1:
-      virt_infra_cpuset: "76-79"
-    dpdk-server-tuned-2:
-      virt_infra_cpuset: "80-83"
-    dpdk-server-tuned-3:
+    dpdk-client-tuned-0:
       virt_infra_cpuset: "84-87"
+    dpdk-client-tuned-1:
+      virt_infra_cpuset: "92-95"
+    dpdk-client-tuned-2:
+      virt_infra_cpuset: "100-103"
+    dpdk-client-tuned-3:
+      virt_infra_cpuset: "108-111"
   vars:
     ansible_python_interpreter: /usr/bin/python3
     virt_infra_disks:

@@ -7,9 +7,9 @@
 # Note that the virt_infra_variant are not set to specific versions,
 # this is to make it work on different hosts
 # Note also that CentOS 8 needs the path to system Python
-dpdk-server:
+dpdkserversimple:
   hosts:
-    dpdk-server-simple[0:3]:
+    dpdk-server-simple-[0:3]:
       virt_infra_root_password: "password"
       virt_infra_ram: "2048"
       virt_infra_cpus: "2"
