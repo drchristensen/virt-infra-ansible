@@ -1,0 +1,37 @@
+- hosts: dpdkserver,!dpdkclient,!kvmhost
+  tasks:
+    - name: Install server data files
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: 0600
+      loop:
+        - { src: 'server/Dockerfile', dest: '/root/Dockerfile' }
+        - { src: 'server/qperf-server.cron', dest: '/root/qperf-server.cron' }
+      become: true
+
+    - name: Install server scripts
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: 0700
+      loop:
+        - { src: 'server/create-pods.sh', dest: '/root/create-pods.sh' }
+        - { src: 'server/start-pods.sh', dest: '/root/start-pods.sh' }
+        - { src: 'server/stop-pods.sh', dest: '/root/stop-pods.sh' }
+        - { src: 'server/enable-pods.sh', dest: '/root/enable-pods.sh' }
+        - { src: 'server/disable-pods.sh', dest: '/root/disable-pods.sh' }
+        - { src: 'server/entry.sh', dest: '/root/entry.sh' }
+        - { src: 'server/get-tcp.sh', dest: '/root/get-tcp.sh' }
+        - { src: 'server/set-tcp.sh', dest: '/root/set-tcp.sh' }
+        - { src: 'server/temp-tcp.sh', dest: '/root/temp-tcp.sh' }
+        - { src: 'server/vhost.sh', dest: '/root/vhost.sh' }
+      become: true
+
+    - name: Create containers on the VM host
+      become: true
+      command: sh /root/create-pods.sh

@@ -28,14 +28,12 @@ fi
 #    1   |   0   |  0-1   |     2   |    60
 #    2   |   0   |  0-3   |     4   |    90
 #    3   |   0   |  0-7   |     8   |   120
-#    4   |  0-1  |  0-7   |    16   |   150
-#    5   |  0-3  |  0-7   |    32   |   180
-#    6   |  0-7  |  0-7   |    64   |   210
-#    7   |  0-15 |  0-7   |   128   |   240
-#    8   |  0-31 |  0-7   |   256   |   270
-#    9   |  0-63 |  0-7   |   512   |   300
+#    4   |   0   |  0-15  |    16   |   150
+#    5   |  0-1  |  0-15  |    32   |   180
+#    6   |  0-3  |  0-15  |    64   |   210
+#    7   |  0-7  |  0-15  |   128   |   240
 #
-TEST_INTERVAL="270"
+TEST_INTERVAL="210"
 
 # Calculate the run number and the test number the script should be
 # executing based on the number of minutes since midnight.
@@ -108,7 +106,7 @@ case $TEST in
     fi
     ;;
   4)
-    if [ $VM_INSTANCE -le 1 ]; then
+    if [[ $VM_INSTANCE -eq 0 && $CONT_INSTANCE -le 15 ]]; then
       echo "Running test 4..."
       run_test
     else
@@ -116,7 +114,7 @@ case $TEST in
     fi
     ;;
   5)
-    if [ $VM_INSTANCE -le 3 ]; then
+    if [ $VM_INSTANCE -le 1 ]; then
       echo "Running test 5..."
       run_test
     else
@@ -124,32 +122,12 @@ case $TEST in
     fi
     ;;
   6)
-    if [ $VM_INSTANCE -le 7 ]; then
+    if [ $VM_INSTANCE -le 3 ]; then
       echo "Running test 6..."
       run_test
     else
       echo "Not running test 6 ..."
     fi
-    ;;
-  7)
-    if [ $VM_INSTANCE -le 15 ]; then
-      echo "Running test 7..."
-      run_test
-    else
-      echo "Not running test 7 ..."
-    fi
-    ;;
-  8)
-    if [ $VM_INSTANCE -le 31 ]; then
-      echo "Running test 8..."
-      run_test
-    else
-      echo "Not running test 8 ..."
-    fi
-    ;;
-  9)
-    echo "Running test 9..."
-    run_test
     ;;
   *)
     echo "Unknown test ..."

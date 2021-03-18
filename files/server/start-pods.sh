@@ -5,7 +5,7 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-CONTAINERS=8
+CONTAINERS=16
 
 cd /root
 

@@ -25,16 +25,29 @@
       delay: 10
       until: result_package_update is succeeded
 
-    - name: Install new packages
+    - name: Install new distro packages
       package:
         name:
           - git
           - vim
+          - tmux
           - qperf
           - iperf3
           - podman
           - nfs-utils
           - nfs4-acl-tools
+          - epel-release
+        state: present
+      become: true
+      register: result_package_install
+      retries: 30
+      delay: 10
+      until: result_package_install is succeeded
+
+    - name: Install new epel packages
+      package:
+        name:
+          - parallel
         state: present
       become: true
       register: result_package_install

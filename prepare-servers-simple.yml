@@ -9,6 +9,7 @@
         mode: 0600
       loop:
         - { src: 'server/Dockerfile', dest: '/root/Dockerfile' }
+        - { src: 'server/qperf-server.cron', dest: '/root/qperf-server.cron' }
       become: true
 
     - name: Install server scripts
@@ -31,6 +32,6 @@
         - { src: 'server/vhost.sh', dest: '/root/vhost.sh' }
       become: true
 
-    - name: Create containers on the VM host
+    - name: Install qperf server cron job
       become: true
-      command: sh /root/create-pods.sh
+      command: /usr/bin/crontab /root/qperf-server.cron 
