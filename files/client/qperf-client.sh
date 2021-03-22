@@ -58,7 +58,7 @@ echo "LOG_FILE = $LOG_FILE ..."
 run_test() {
   # The qperf port for the remote server is calculated as the default
   # qperf port number () plus the instance number (QPERF_INSTANCE)
-  REM_HOSTNAME="dpdk-server-$VM_INSTANCE"
+  REM_HOSTNAME=`hostname | sed 's/-client-/-server-/'`
 
   # Create a test file for the qperf test results
   echo "local_vm_hostname: $LOCAL_HOSTNAME"     > "$LOG_FILE"

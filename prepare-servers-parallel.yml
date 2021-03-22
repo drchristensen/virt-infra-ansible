@@ -1,4 +1,4 @@
-- hosts: dpdkserver,!dpdkclient,!kvmhost
+- hosts: all,!kvmhost
   tasks:
     - name: Install server data files
       copy:

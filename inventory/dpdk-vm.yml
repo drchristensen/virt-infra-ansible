@@ -1,0 +1,165 @@
+---
+## YAML based inventory, see:
+## https://docs.ansible.com/ansible/latest/plugins/inventory/yaml.html
+dpdk:
+  children:
+    # Groups based on the pyshical host
+    ltc17u33:
+      children:
+        # Groups based on host and VM tuning
+        ltc17u33_simple:
+          children:
+            # Groups based on host, VM tuning, and role
+            ltc17u33_simple_client:
+              hosts:
+                u33-simple-client-[0:3]:
+              # ltc17u33 simple client vars
+            ltc17u33_simple_server:
+              hosts:
+                u33-simple-server-[0:3]:
+              # ltc17u33 simple server vars
+          # ltc17u30 simple vars
+        ltc17u33_tuned:
+          children:
+            ltc17u33_tuned_client:
+              hosts:
+                # u33-tuned-client-[0:3]:
+                u33-tuned-client-0:
+                  virt_infra_cpuset: "84-87"
+                u33-tuned-client-1:
+                  virt_infra_cpuset: "92-95"
+                u33-tuned-client-2:
+                  virt_infra_cpuset: "100-103"
+                u33-tuned-client-3:
+                  virt_infra_cpuset: "108-111"
+              # ltc17u33 tuned client vars
+            ltc17u33_tuned_server:
+              hosts:
+                # u33-tuned-server-[0:3]:
+                u33-tuned-server-0:
+                  virt_infra_cpuset: "72-75"
+                u33-tuned-server-1:
+                  virt_infra_cpuset: "76-79"
+                u33-tuned-server-2:
+                  virt_infra_cpuset: "80-83"
+                u33-tuned-server-3:
+                  virt_infra_cpuset: "84-87"
+              # ltc17u33 tuned server vars
+          # ltc17u33 tuned vars
+          vars:
+            virt_infra_cpu_numa: "cell0.id=0"
+            virt_infra_cpu_numa_cpus: "0-3"
+            virt_infra_numatune: "8,mode=strict"
+            virt_infra_memorybacking: "hugepages=on,size=1024,unit=M"
+      # ltc17u33 vars
+      vars:
+        virt_infra_distro_image: CentOS-8-GenericCloud-8.2.2004-20200611.2.ppc64le.qcow2
+        virt_infra_distro_image_url: https://cloud.centos.org/centos/8/ppc64le/images/CentOS-8-GenericCloud-8.2.2004-20200611.2.ppc64le.qcow2
+        virt_infra_distro_image_checksum_url: https://cloud.centos.org/centos/8/ppc64le/images/CHECKSUM
+        virt_infra_machine_type: pseries
+        virt_infra_graphics: none
+        virt_infra_variant: centos7.0
+        # Needed for CentOS8
+        ansible_python_interpreter: /usr/libexec/platform-python
+    ltc19u30:
+      children:
+        ltc19u30_simple:
+          children:
+            ltc19u30_simple_client:
+              hosts:
+                u30-simple-client-[0:3]:
+              # ltc19u30 simple client vars
+            ltc19u30_simple_server:
+              hosts:
+                u30-simple-server-[0:3]:
+              # ltc19u30 simple server vars
+          # ltc19u30 simple vars
+        ltc19u30_tuned:
+          children:
+            ltc19u30_tuned_client:
+              hosts:
+                # u30-tuned-client-[0:3]:
+                u30-tuned-client-0:
+                  virt_infra_cpuset: "80-83"
+                u30-tuned-client-1:
+                  virt_infra_cpuset: "84-87"
+                u30-tuned-client-2:
+                  virt_infra_cpuset: "88-91"
+                u30-tuned-client-3:
+                  virt_infra_cpuset: "92-95"
+              # ltc19u30 tuned client vars
+            ltc19u30_tuned_server:
+              hosts:
+                # u30-tuned-server-[0:3]:
+                u30-tuned-server-0:
+                  virt_infra_cpuset: "96-99"
+                u30-tuned-server-1:
+                  virt_infra_cpuset: "100-103"
+                u30-tuned-server-2:
+                  virt_infra_cpuset: "104-107"
+                u30-tuned-server-3:
+                  virt_infra_cpuset: "108-111"
+              # ltc19u30 tuned server vars
+          #ltc19u30 tuned vars
+          vars:
+            virt_infra_cpu_numa: "cell0.id=0"
+            virt_infra_cpu_numa_cpus: "0-3"
+            virt_infra_numatune: "8,mode=strict"
+            virt_infra_memorybacking: "hugepages=on,size=1024,unit=M"
+      # ltc19u30 vars
+      vars:
+        virt_infra_distro_image: CentOS-8-GenericCloud-8.2.2004-20200611.2.ppc64le.qcow2
+        virt_infra_distro_image_url: https://cloud.centos.org/centos/8/ppc64le/images/CentOS-8-GenericCloud-8.2.2004-20200611.2.ppc64le.qcow2
+        virt_infra_distro_image_checksum_url: https://cloud.centos.org/centos/8/ppc64le/images/CHECKSUM
+        virt_infra_machine_type: pseries
+        virt_infra_graphics: none
+        virt_infra_variant: centos7.0
+        # Needed for CentOS8
+        ansible_python_interpreter: /usr/libexec/platform-python
+    ltc18u19:
+      children:
+        ltc18u19_simple:
+          children:
+            ltc18u19_simple_client:
+              hosts:
+                u19-imple-client-[0:3]:
+              # ltc18u19 simple client vars
+            ltc18u19_simple_server:
+              hosts:
+                u19-simple-server-[0:3]:
+              # ltc18u19 simple server vars
+          # ltc18u19 simple vars
+        ltc18u19_tuned:
+          children:
+            ltc18u19_tuned_client:
+              hosts:
+                u19-tuned-client-[0:3]:
+              # ltc18u19 tuned client vars
+            ltc18u19_tuned_server:
+              hosts:
+                u19-tuned-server-[0:3]:
+              # ltc18u19 tuned server vars
+          # ltc18u19 tuned vars
+      # ltc18u19 vars
+      vars:
+        virt_infra_distro_image: CentOS-8-GenericCloud-8.2.2004-20200611.2.x86_64.qcow2
+        virt_infra_distro_image_url: https://cloud.centos.org/centos/8/x86_64/images/CentOS-8-GenericCloud-8.2.2004-20200611.2.x86_64.qcow2
+        virt_infra_distro_image_checksum_url: https://cloud.centos.org/centos/8/x86_64/images/CHECKSUM
+        virt_infra_machine_type: q35
+        virt_infra_graphics: spice
+        virt_infra_variant: centos7.0
+        # Needed for CentOS8
+        ansible_python_interpreter: /usr/libexec/platform-python
+  # dpdk shared variables
+  vars:
+    virt_infra_root_password: "password"
+    virt_infra_ram: "4096"
+    virt_infra_cpus: "4"
+    virt_infra_state: running
+    ansible_python_interpreter: /usr/bin/python3
+    virt_infra_disks:
+      - name: "boot"
+        bus: "virtio"
+        size: "20"
+    virt_infra_networks:
+      - name: "default"
