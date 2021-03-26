@@ -49,7 +49,7 @@ TEST=$(( (MIN - RUN * TEST_INTERVAL) / 30 ))
 echo "This is run $RUN and test $TEST ..."
 
 LOCAL_HOSTNAME=`hostname`
-VM_INSTANCE=`echo $LOCAL_HOSTNAME | sed 's/dpdk-client-//'`
+VM_INSTANCE=`echo $LOCAL_HOSTNAME | sed 's/.*-client-//'`
 LOG_DIR="/mnt/logs"
 LOG_FILE="$LOG_DIR/$(printf "%04d" $MIN)_${LOCAL_HOSTNAME}_qperf_${QPERF_INSTANCE}_${TEST_DATE}.txt"
 

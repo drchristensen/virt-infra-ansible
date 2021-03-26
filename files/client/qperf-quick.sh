@@ -8,7 +8,7 @@
 QPERF_PORT=$1
 
 LOCAL_HOSTNAME=`hostname`
-VM_INSTANCE=`echo $LOCAL_HOSTNAME | sed 's/dpdk-client-//'`
+VM_INSTANCE=`echo $LOCAL_HOSTNAME | sed 's/.*-client-//'`
 REM_HOSTNAME="dpdk-server-$VM_INSTANCE"
 OUTFILE=instance-${2}.txt
 
