@@ -163,3 +163,4 @@ dpdk:
         size: "20"
     virt_infra_networks:
       - name: "default"
+        queues: 4
